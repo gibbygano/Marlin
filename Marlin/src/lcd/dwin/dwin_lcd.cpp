@@ -67,7 +67,7 @@ inline void DWIN_Long(size_t &i, const uint32_t lval) {
 
 inline void DWIN_String(size_t &i, const char * const string) {
   const size_t len = _MIN(sizeof(DWIN_SendBuf) - i, strlen(string));
-  memcpy(&DWIN_SendBuf[i+1], string, len);
+  memcpy(&DWIN_SendBuf[i + 1], string, len);
   i += len;
 }
 
@@ -75,7 +75,7 @@ inline void DWIN_String(size_t &i, const __FlashStringHelper * string) {
   if (!string) return;
   const size_t len = strlen_P((PGM_P)string); // cast it to PGM_P, which is basically const char *, and measure it using the _P version of strlen.
   if (len == 0) return;
-  memcpy(&DWIN_SendBuf[i+1], string, len);
+  memcpy(&DWIN_SendBuf[i + 1], string, len);
   i += len;
 }
 
@@ -95,7 +95,7 @@ bool DWIN_Handshake(void) {
   #endif
   LCD_SERIAL.begin(LCD_BAUDRATE);
   const millis_t serial_connect_timeout = millis() + 1000UL;
-  while (!LCD_SERIAL.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
+  while (!LCD_SERIAL && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
 
   size_t i = 0;
   DWIN_Byte(i, 0x00);
@@ -211,17 +211,16 @@ void DWIN_Draw_Rectangle(uint8_t mode, uint16_t color,
 
 //Color: color
 //x/y: Upper-left coordinate of the first pixel
-void DWIN_Draw_DegreeSymbol(uint16_t Color, uint16_t x, uint16_t y)	{
-  	DWIN_Draw_Point(Color, 1, 1, x + 1, y);
-  	DWIN_Draw_Point(Color, 1, 1, x + 2, y);
-  	DWIN_Draw_Point(Color, 1, 1, x, y + 1);
-		DWIN_Draw_Point(Color, 1, 1, x + 3, y + 1);
-  	DWIN_Draw_Point(Color, 1, 1, x, y + 2);
-		DWIN_Draw_Point(Color, 1, 1, x + 3, y + 2);
-    DWIN_Draw_Point(Color, 1, 1, x + 1, y + 3);
-  	DWIN_Draw_Point(Color, 1, 1, x + 2, y + 3);
+void DWIN_Draw_DegreeSymbol(uint16_t Color, uint16_t x, uint16_t y) {
+  DWIN_Draw_Point(Color, 1, 1, x + 1, y);
+  DWIN_Draw_Point(Color, 1, 1, x + 2, y);
+  DWIN_Draw_Point(Color, 1, 1, x, y + 1);
+  DWIN_Draw_Point(Color, 1, 1, x + 3, y + 1);
+  DWIN_Draw_Point(Color, 1, 1, x, y + 2);
+  DWIN_Draw_Point(Color, 1, 1, x + 3, y + 2);
+  DWIN_Draw_Point(Color, 1, 1, x + 1, y + 3);
+  DWIN_Draw_Point(Color, 1, 1, x + 2, y + 3);
 }
-
 
 // Move a screen area
 //  mode: 0, circle shift; 1, translation
