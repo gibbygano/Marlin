@@ -1,4 +1,4 @@
-# Ender 3 V2 JyersUI
+# Ender 3 V2 JyersUI - Forked for Ender 3 V2 w/BLTouch & E3D V6
 
 This fork was created with the intention of giving the best possible experience to E3V2 users. However, GitHub, flashing new firmware, etc. can all be quite daunting for new users. Pretty much everything you need to know is here on github, so here's a quick rundown of where to find what you need!
 
